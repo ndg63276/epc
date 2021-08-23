@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://www.w3.org/2005/10/profile">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164510568-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+
+        gtag("config", "UA-164510568-1");
+    </script>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Search for Energy Performance Certificates.">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <link rel="icon" type="image/png" href="../short_logo_trans.png">
+
+    <link rel="stylesheet" media="(max-width:800px)" href="../smallscreens.css">
+    <link rel="stylesheet" media="(min-width:801px)" href="../largescreens.css">
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <title>SmartAtHome.co.uk - Energy Performance Certificates</title>
+    <script src="../general_functions.js"></script>
+    <script src="functions.js"></script>
+</head>
+<body>
+<center>
+<a href="../index.html"><img src="../long_logo.png" alt="smartathome.co.uk logo" id="logo"></a>
+<a href="../index.html"><img src="../long_logo_dark.png" alt="smartathome.co.uk logo" id="logo_dark" class="hidden"></a>
+<br/>
+<form id="searchForm">
+<input type="text" id="postcode" placeholder="Search by postcode"></input>
+<button type="submit" onclick="search(); return false">Search</button>
+</form>
+<div id="results"></div>
+</center>
+</body>
+</html>
+
