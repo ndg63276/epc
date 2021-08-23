@@ -100,7 +100,7 @@ const fields = {
 
 function sortByKey(key, array) {
 	return array.sort(function(a, b) {
-		var x = a[key]; var y = b[key];
+		var x = a[key].toLowerCase(); var y = b[key].toLowerCase();
 		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 	});
 }
@@ -145,7 +145,11 @@ function generateDetails(json) {
 		a.href = "javascript:void(0)";
 		a.id = thiskey["lmk-key"];
 		a.onclick = function() { showDetails(this.id) };
-		div.append(a);
+		var span = document.createElement("span");
+		span.innerHTML = " (" + thiskey["inspection-date"].substr(0,4) + ")";
+		var safeAddress = thiskey["address"].replace(/[ ,]/g, "").toLowerCase();
+		span.classList.add("hidden", safeAddress);
+		div.append(a, span);
 		var table = document.createElement("table");
 		table.classList.add("fixed-table");
 		table.id = "id_" + thiskey["lmk-key"];
@@ -173,6 +177,11 @@ function generateDetails(json) {
 		table.append(tr);
 		table.classList.add("hidden", "addressTable");
 		results.append(div, table);
+		if (document.getElementsByClassName(safeAddress).length > 1) {
+			for (el of document.getElementsByClassName(safeAddress)) {
+				el.classList.remove("hidden");
+			}
+		}
 	}
 
 }
