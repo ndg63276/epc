@@ -125,6 +125,10 @@ function search() {
 		success: function (json) {
 			generateDetails(json);
 		},
+		error: function (jqXHR, exception) {
+			var results = document.getElementById("results");
+			results.innerHTML = "No results found";
+		}
 	})
 }
 
