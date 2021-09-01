@@ -97,6 +97,21 @@ const fields = {
 }
 */
 
+window.onhashchange = function() {
+	console.log(location.hash);
+	if (location.hash.length == 0) {
+		console.log("blank");
+		clearAll();
+	} else if ( ! isNaN(parseInt(location.hash.substring(1))) ) {
+		console.log("number");
+		showDetails(location.hash.substring(1));
+	} else {
+		console.log("postcode");
+		back();
+	}
+}
+
+
 
 function sortByKey(key, array) {
 	return array.sort(function(a, b) {
@@ -105,15 +120,15 @@ function sortByKey(key, array) {
 	});
 }
 
-
 function search() {
+	var postcode = document.getElementById("postcode").value.replace(" ", "");
 	var url = "https://epc.opendatacommunities.org/api/v1/domestic/search";
 	var headers = {
 		"Accept": "application/json",
 		"Authorization": "Basic "+auth
 	}
 	var data = {
-		"postcode": document.getElementById("postcode").value,
+		"postcode": postcode,
 		"size": 1000,
 	}
 	$.ajax({
@@ -123,7 +138,8 @@ function search() {
 		data: data,
 		async: false,
 		success: function (json) {
-			generateDetails(json);
+			location.hash = postcode;
+			generateDetails(postcode, json);
 		},
 		error: function (jqXHR, exception) {
 			var results = document.getElementById("results");
@@ -132,7 +148,7 @@ function search() {
 	})
 }
 
-function generateDetails(json) {
+function generateDetails(postcode, json) {
 	var results = document.getElementById("results");
 	results.innerHTML = "";
 	var sorted = sortByKey("address", json["rows"]);
@@ -142,9 +158,8 @@ function generateDetails(json) {
 		div.classList.add("addressDiv");
 		var a = document.createElement("a");
 		a.innerHTML = thiskey["address"];
-		a.href = "javascript:void(0)";
+		a.href = "#"+thiskey["lmk-key"];
 		a.id = thiskey["lmk-key"];
-		a.onclick = function() { showDetails(this.id) };
 		var span = document.createElement("span");
 		span.innerHTML = " (" + thiskey["inspection-date"].substr(0,4) + ")";
 		var safeAddress = thiskey["address"].replace(/[ ,]/g, "").toLowerCase();
@@ -162,7 +177,6 @@ function generateDetails(json) {
 				var td2 = document.createElement("td");
 				td2.classList.add("centercolumn");
 				var td3 = document.createElement("td");
-				//td3.classList.add("leftcolumn");
 				td3.innerHTML = thiskey[field];
 				tr.append(td1, td2, td3);
 				table.append(tr);
@@ -171,7 +185,7 @@ function generateDetails(json) {
 		tr = document.createElement("tr");
 		td1 = document.createElement("td");
 		td1.classList.add("center");
-		td1.innerHTML = "<a onclick='back()' href='javascript:void(0);'>Back</a>";
+		td1.innerHTML = "<a href='#"+postcode+"'>Back</a>";
 		td1.colSpan = "3";
 		tr.append(td1);
 		table.append(tr);
@@ -189,6 +203,7 @@ function generateDetails(json) {
 function showDetails(thisid) {
 	var el = document.getElementById("id_"+thisid);
 	el.classList.remove("hidden");
+	location.hash = thisid;
 	for (div of document.getElementsByClassName("addressDiv")) {
 		div.classList.add("hidden");
 	}
@@ -198,6 +213,16 @@ function showDetails(thisid) {
 function back() {
 	for (div of document.getElementsByClassName("addressDiv")) {
 		div.classList.remove("hidden");
+	}
+	for (div of document.getElementsByClassName("addressTable")) {
+		div.classList.add("hidden");
+	}
+	document.getElementById("searchForm").classList.remove("hidden");
+}
+
+function clearAll() {
+	for (div of document.getElementsByClassName("addressDiv")) {
+		div.classList.add("hidden");
 	}
 	for (div of document.getElementsByClassName("addressTable")) {
 		div.classList.add("hidden");
