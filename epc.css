@@ -1,0 +1,68 @@
+body {
+	font-family: Open Sans,sans-serif;
+}
+
+.triangle {
+	width: 0px;
+	display: inline-block;
+	height: 0px;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	line-height: 30px;
+	vertical-align: bottom;
+	padding: 0px 0px 0px 0px !important;
+}
+
+.rating {
+	font-size: 24px;
+	font-weight: 700;
+	color: white;
+	width: 35px;
+	display: inline-block;
+	position: relative;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.rating_A {
+	background: #008054;
+}
+.triangle_A {
+	border-right: 15px solid #008054;
+}
+.rating_B {
+	background: #19b459;
+}
+.triangle_B {
+	border-right: 15px solid #19b459;
+}
+.rating_C {
+	background: #8dce46;
+}
+.triangle_C {
+	border-right: 15px solid #8dce46;
+}
+.rating_D {
+	background: #ffd500;
+}
+.triangle_D {
+	border-right: 15px solid #ffd500;
+}
+.rating_E {
+	background: #fcaa65;
+}
+.triangle_E {
+	border-right: 15px solid #fcaa65;
+}
+.rating_F {
+	background: #ef8023;
+}
+.triangle_F {
+	border-right: 15px solid #ef8023;
+}
+.rating_G {
+	background: #e9153b;
+}
+.triangle_G {
+	border-right: 15px solid #e9153b;
+}

@@ -168,6 +168,8 @@ function generateDetails(postcode, json) {
 		var table = document.createElement("table");
 		table.classList.add("fixed-table");
 		table.id = "id_" + thiskey["lmk-key"];
+		var current = thiskey["current-energy-rating"];
+		var potential = thiskey["potential-energy-rating"];
 		for (field in fields) {
 			if (field in thiskey) {
 				var tr = document.createElement("tr");
@@ -175,10 +177,16 @@ function generateDetails(postcode, json) {
 				td1.classList.add("leftcolumn");
 				td1.innerHTML = fields[field]+":";
 				var td2 = document.createElement("td");
-				td2.classList.add("centercolumn");
-				var td3 = document.createElement("td");
-				td3.innerHTML = thiskey[field];
-				tr.append(td1, td2, td3);
+				if (field.startsWith("current")) {
+					td2.innerHTML = "<span class='triangle triangle_"+current+"'></span>";
+					td2.innerHTML += "<span class='rating rating_"+current+"'>"+thiskey[field]+"</span>";
+				} else if (field.startsWith("potential")) {
+					td2.innerHTML = "<span class='triangle triangle_"+potential+"'></span>";
+					td2.innerHTML += "<span class='rating rating_"+potential+"'>"+thiskey[field]+"</span>";
+				} else {
+					td2.innerHTML = "<span class='leftpadding'>"+thiskey[field]+"</span>";
+				}
+				tr.append(td1, td2);
 				table.append(tr);
 			}
 		}
@@ -201,13 +209,13 @@ function generateDetails(postcode, json) {
 }
 
 function showDetails(thisid) {
-	var el = document.getElementById("id_"+thisid);
-	el.classList.remove("hidden");
-	location.hash = thisid;
 	for (div of document.getElementsByClassName("addressDiv")) {
 		div.classList.add("hidden");
 	}
 	document.getElementById("searchForm").classList.add("hidden");
+	var el = document.getElementById("id_"+thisid);
+	el.classList.remove("hidden");
+	window.scroll(0, 0);
 }
 
 function back() {
