@@ -11,6 +11,10 @@ python serve.py
 ```
 3. Navigate to http://localhost:8000 in your browser
 
+## Known Bugs
+The EPC server expects an API key, you can get one at https://epc.opendatacommunities.org/login.
+When you have one, insert it on line 4 of functions.js.
+
 ## Website
 This tool is available at https://smartathome.co.uk/epc/
 

@@ -1,5 +1,10 @@
 const apikey = get_text("apikey.txt");
-const auth = btoa(apikey.deobfuscate());
+var auth;
+if (apikey == {}) {
+	auth = btoa("INSERT EMAIL ADDRESS AND API KEY HERE");
+} else {
+	auth = btoa(apikey.deobfuscate());
+}
 
 const fields = {
 "address": "Address",
