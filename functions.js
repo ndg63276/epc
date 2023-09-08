@@ -146,6 +146,29 @@ function search() {
 	})
 }
 
+function getDetails(lmkkey) {
+	var url = "https://epc.opendatacommunities.org/api/v1/domestic/certificate/"+lmkkey;
+	var headers = {
+		"Accept": "application/json",
+		"Authorization": "Basic "+auth
+	}
+	$.ajax({
+		url: url,
+		type: "GET",
+		headers: headers,
+		async: false,
+		success: function (json) {
+			postcode = json["rows"][0]["postcode"].replace(" ", "");
+			generateDetails(postcode, json)
+		},
+		error: function (jqXHR, exception) {
+			var results = document.getElementById("results");
+			results.innerHTML = "No results found";
+		}
+	})
+}
+
+
 function generateDetails(postcode, json) {
 	var results = document.getElementById("results");
 	results.innerHTML = "";
@@ -217,6 +240,10 @@ function showDetails(thisid) {
 }
 
 function back() {
+	if (document.getElementById("results").dataset.refresh == "true") {
+		location.reload();
+		return
+	};
 	for (div of document.getElementsByClassName("addressDiv")) {
 		div.classList.remove("hidden");
 	}
@@ -243,6 +270,8 @@ $(document).ready(function () {
 		clearAll();
 	} else if ( ! isNaN(parseInt(hash)) ) {
 		console.log("number");
+		document.getElementById("results").dataset.refresh = "true";
+		getDetails(hash);
 		showDetails(hash);
 	} else {
 		console.log("postcode");
