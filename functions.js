@@ -111,8 +111,6 @@ window.onhashchange = function() {
 	}
 }
 
-
-
 function sortByKey(key, array) {
 	return array.sort(function(a, b) {
 		var x = a[key].toLowerCase(); var y = b[key].toLowerCase();
@@ -237,3 +235,18 @@ function clearAll() {
 	}
 	document.getElementById("searchForm").classList.remove("hidden");
 }
+
+$(document).ready(function () {
+	var hash = location.hash.substring(1)
+	if (hash == 0) {
+		console.log("blank");
+		clearAll();
+	} else if ( ! isNaN(parseInt(hash)) ) {
+		console.log("number");
+		showDetails(hash);
+	} else {
+		console.log("postcode");
+		document.getElementById("postcode").value = hash;
+		search();
+	}
+});
